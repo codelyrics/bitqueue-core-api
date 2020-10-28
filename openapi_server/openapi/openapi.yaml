@@ -1,0 +1,258 @@
+openapi: 3.0.0
+info:
+  description: Bitqueue API
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Bitqueue API
+  version: "1.0"
+externalDocs:
+  description: https://github.com/codelyrics/bitqueue-api/wiki/About-Bitqueue-(v0.1)
+  url: https://github.com/codelyrics/bitqueue-api/wiki/About-Bitqueue-(v0.1)
+servers:
+- description: BitQueue API endpoints
+  url: http://0.0.0.0:8080/bitqueue/api
+paths:
+  /org:
+    get:
+      description: Return Organization Details.
+      operationId: org_get
+      parameters:
+      - description: Organization name
+        explode: true
+        in: query
+        name: orgname
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/org'
+          description: OK
+        "500":
+          description: Error
+      x-openapi-router-controller: openapi_server.controllers.default_controller
+    post:
+      description: Create Organization
+      operationId: org_post
+      parameters:
+      - description: Organization name
+        explode: true
+        in: query
+        name: orgname
+        required: true
+        schema:
+          type: string
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/org'
+        description: Create org
+        required: true
+      responses:
+        "201":
+          description: Created
+      x-openapi-router-controller: openapi_server.controllers.default_controller
+  /org/{orgid}/tenant:
+    get:
+      description: Get tenants details
+      operationId: org_orgid_tenant_get
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: orgid
+        required: true
+        schema:
+          default: 1
+          format: int64
+          maximum: 99999
+          minimum: 1
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/tenants'
+          description: OK
+        "500":
+          description: Error
+      x-openapi-router-controller: openapi_server.controllers.default_controller
+    post:
+      description: Create tenant
+      operationId: org_orgid_tenant_post
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: orgid
+        required: true
+        schema:
+          default: 1
+          format: int64
+          maximum: 99999
+          minimum: 1
+          type: integer
+        style: simple
+      - description: Tenant name
+        explode: true
+        in: query
+        name: tenantname
+        required: true
+        schema:
+          type: string
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tenant'
+        description: Create Tenant
+        required: true
+      responses:
+        "201":
+          description: Created
+      x-openapi-router-controller: openapi_server.controllers.default_controller
+  /org/{orgid}/tenant/{tenantid}:
+    get:
+      description: Get tenants details
+      operationId: org_orgid_tenant_tenantid_get
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: orgid
+        required: true
+        schema:
+          default: 1
+          format: int64
+          maximum: 99999
+          minimum: 1
+          type: integer
+        style: simple
+      - description: Tenant Id
+        explode: false
+        in: path
+        name: tenantid
+        required: true
+        schema:
+          default: 1
+          format: int64
+          maximum: 99999
+          minimum: 1
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            aplication/json:
+              schema:
+                $ref: '#/components/schemas/tenant'
+          description: OK
+        "500":
+          description: Error
+      x-openapi-router-controller: openapi_server.controllers.default_controller
+components:
+  parameters:
+    orgidpath:
+      description: Organization ID
+      explode: false
+      in: path
+      name: orgid
+      required: true
+      schema:
+        default: 1
+        format: int64
+        maximum: 99999
+        minimum: 1
+        type: integer
+      style: simple
+    tenantidpath:
+      description: Tenant Id
+      explode: false
+      in: path
+      name: tenantid
+      required: true
+      schema:
+        default: 1
+        format: int64
+        maximum: 99999
+        minimum: 1
+        type: integer
+      style: simple
+    orgnamequery:
+      description: Organization name
+      explode: true
+      in: query
+      name: orgname
+      required: true
+      schema:
+        type: string
+      style: form
+    tenantnamequery:
+      description: Tenant name
+      explode: true
+      in: query
+      name: tenantname
+      required: true
+      schema:
+        type: string
+      style: form
+  schemas:
+    org:
+      example:
+        created: 30-12-2020 12:31:50
+        name: Redhat
+        updated: 30-12-2020 12:31:50
+        uuid: f1f62f20-db3c-11ea-87d0-0242ac130003
+        orgid: 1234
+      properties:
+        name:
+          example: Redhat
+          type: string
+        orgid:
+          example: 1234
+          type: integer
+        created:
+          example: 30-12-2020 12:31:50
+          type: string
+        updated:
+          example: 30-12-2020 12:31:50
+          type: string
+        uuid:
+          example: f1f62f20-db3c-11ea-87d0-0242ac130003
+          type: string
+      type: object
+    tenant:
+      properties:
+        name:
+          example: Redhat
+          type: string
+        orgid:
+          example: 1234
+          type: integer
+        tenantid:
+          example: 2323
+          type: integer
+        created:
+          example: 30-12-2020 12:31:50
+          type: string
+        updated:
+          example: 30-12-2020 12:31:50
+          type: string
+        uuid:
+          example: f1f62f20-db3c-11ea-87d0-0242ac130003
+          type: string
+      type: object
+    tenants:
+      items:
+        $ref: '#/components/schemas/tenant'
+      type: array
