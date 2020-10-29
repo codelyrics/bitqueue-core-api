@@ -6,8 +6,64 @@ from openapi_server.models.tenant import Tenant  # noqa: E501
 from openapi_server import util
 
 
-def org_get(orgname):  # noqa: E501
-    """org_get
+def create_org(orgname):  # noqa: E501
+    """create_org
+
+    Create Organization # noqa: E501
+
+    :param orgname: Organization name
+    :type orgname: str
+
+    :rtype: None
+    """
+    return 'do some magic!'
+
+
+def create_tenant(orgid, tenantname):  # noqa: E501
+    """create_tenant
+
+    Create tenant # noqa: E501
+
+    :param orgid: Organization ID
+    :type orgid: int
+    :param tenantname: Tenant name
+    :type tenantname: str
+
+    :rtype: None
+    """
+    return 'do some magic!'
+
+
+def delete_org(orgid):  # noqa: E501
+    """delete_org
+
+    Delete Organization # noqa: E501
+
+    :param orgid: Organization ID
+    :type orgid: int
+
+    :rtype: None
+    """
+    return 'do some magic!'
+
+
+def delete_tenant(orgid, tenantid):  # noqa: E501
+    """delete_tenant
+
+    delete tenant # noqa: E501
+
+    :param orgid: Organization ID
+    :type orgid: int
+    :param tenantid: Tenant Id
+    :type tenantid: int
+
+    :rtype: None
+    """
+    return 'do some magic!'
+
+
+def get_org(orgname):  # noqa: E501
+    """get_org
 
     Return Organization Details. # noqa: E501
 
@@ -19,40 +75,8 @@ def org_get(orgname):  # noqa: E501
     return 'do some magic!'
 
 
-def org_orgid_tenant_get(orgid):  # noqa: E501
-    """org_orgid_tenant_get
-
-    Get tenants details # noqa: E501
-
-    :param orgid: Organization ID
-    :type orgid: int
-
-    :rtype: List[Tenant]
-    """
-    return 'do some magic!'
-
-
-def org_orgid_tenant_post(orgid, tenantname, tenant):  # noqa: E501
-    """org_orgid_tenant_post
-
-    Create tenant # noqa: E501
-
-    :param orgid: Organization ID
-    :type orgid: int
-    :param tenantname: Tenant name
-    :type tenantname: str
-    :param tenant: Create Tenant
-    :type tenant: dict | bytes
-
-    :rtype: None
-    """
-    if connexion.request.is_json:
-        tenant = Tenant.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
-
-
-def org_orgid_tenant_tenantid_get(orgid, tenantid):  # noqa: E501
-    """org_orgid_tenant_tenantid_get
+def get_tenant_by_id(orgid, tenantid):  # noqa: E501
+    """get_tenant_by_id
 
     Get tenants details # noqa: E501
 
@@ -66,18 +90,14 @@ def org_orgid_tenant_tenantid_get(orgid, tenantid):  # noqa: E501
     return 'do some magic!'
 
 
-def org_post(orgname, org):  # noqa: E501
-    """org_post
+def get_tenant_list(orgid):  # noqa: E501
+    """get_tenant_list
 
-    Create Organization # noqa: E501
+    Get tenants details # noqa: E501
 
-    :param orgname: Organization name
-    :type orgname: str
-    :param org: Create org
-    :type org: dict | bytes
+    :param orgid: Organization ID
+    :type orgid: int
 
-    :rtype: None
+    :rtype: List[Tenant]
     """
-    if connexion.request.is_json:
-        org = Org.from_dict(connexion.request.get_json())  # noqa: E501
     return 'do some magic!'
