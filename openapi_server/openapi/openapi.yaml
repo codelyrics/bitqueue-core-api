@@ -16,7 +16,7 @@ paths:
   /org:
     get:
       description: Return Organization Details.
-      operationId: org_get
+      operationId: get_org
       parameters:
       - description: Organization name
         explode: true
@@ -38,7 +38,7 @@ paths:
       x-openapi-router-controller: openapi_server.controllers.default_controller
     post:
       description: Create Organization
-      operationId: org_post
+      operationId: create_org
       parameters:
       - description: Organization name
         explode: true
@@ -48,21 +48,37 @@ paths:
         schema:
           type: string
         style: form
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/org'
-        description: Create org
-        required: true
       responses:
         "201":
           description: Created
+        "404":
+          description: Not Found
+      x-openapi-router-controller: openapi_server.controllers.default_controller
+  /org/{orgid}:
+    delete:
+      description: Delete Organization
+      operationId: delete_org
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: orgid
+        required: true
+        schema:
+          default: 1
+          format: int64
+          maximum: 99999
+          minimum: 1
+          type: integer
+        style: simple
+      responses:
+        "204":
+          description: Organization is deleted.
       x-openapi-router-controller: openapi_server.controllers.default_controller
   /org/{orgid}/tenant:
     get:
       description: Get tenants details
-      operationId: org_orgid_tenant_get
+      operationId: get_tenant_list
       parameters:
       - description: Organization ID
         explode: false
@@ -88,7 +104,7 @@ paths:
       x-openapi-router-controller: openapi_server.controllers.default_controller
     post:
       description: Create tenant
-      operationId: org_orgid_tenant_post
+      operationId: create_tenant
       parameters:
       - description: Organization ID
         explode: false
@@ -110,21 +126,46 @@ paths:
         schema:
           type: string
         style: form
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/tenant'
-        description: Create Tenant
-        required: true
       responses:
         "201":
           description: Created
       x-openapi-router-controller: openapi_server.controllers.default_controller
   /org/{orgid}/tenant/{tenantid}:
+    delete:
+      description: delete tenant
+      operationId: delete_tenant
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: orgid
+        required: true
+        schema:
+          default: 1
+          format: int64
+          maximum: 99999
+          minimum: 1
+          type: integer
+        style: simple
+      - description: Tenant Id
+        explode: false
+        in: path
+        name: tenantid
+        required: true
+        schema:
+          default: 1
+          format: int64
+          maximum: 99999
+          minimum: 1
+          type: integer
+        style: simple
+      responses:
+        "204":
+          description: Tenant deleted
+      x-openapi-router-controller: openapi_server.controllers.default_controller
     get:
       description: Get tenants details
-      operationId: org_orgid_tenant_tenantid_get
+      operationId: get_tenant_by_id
       parameters:
       - description: Organization ID
         explode: false
@@ -162,7 +203,7 @@ paths:
       x-openapi-router-controller: openapi_server.controllers.default_controller
 components:
   parameters:
-    orgidpath:
+    orgid:
       description: Organization ID
       explode: false
       in: path
@@ -175,7 +216,7 @@ components:
         minimum: 1
         type: integer
       style: simple
-    tenantidpath:
+    tenantid:
       description: Tenant Id
       explode: false
       in: path
@@ -188,7 +229,7 @@ components:
         minimum: 1
         type: integer
       style: simple
-    orgnamequery:
+    orgname:
       description: Organization name
       explode: true
       in: query
@@ -197,7 +238,7 @@ components:
       schema:
         type: string
       style: form
-    tenantnamequery:
+    tenantname:
       description: Tenant name
       explode: true
       in: query
@@ -216,40 +257,36 @@ components:
         orgid: 1234
       properties:
         name:
-          example: Redhat
           type: string
         orgid:
-          example: 1234
           type: integer
         created:
-          example: 30-12-2020 12:31:50
           type: string
         updated:
-          example: 30-12-2020 12:31:50
           type: string
         uuid:
-          example: f1f62f20-db3c-11ea-87d0-0242ac130003
           type: string
       type: object
     tenant:
+      example:
+        name: tenant
+        orgid: 1234
+        tenantid: 2342
+        created: 30-12-2020 12:31:50
+        updated: 30-12-2020 12:31:50
+        uuid: f1f62f20-db3c-11ea-87d0-0242ac130003
       properties:
         name:
-          example: Redhat
           type: string
         orgid:
-          example: 1234
           type: integer
         tenantid:
-          example: 2323
           type: integer
         created:
-          example: 30-12-2020 12:31:50
           type: string
         updated:
-          example: 30-12-2020 12:31:50
           type: string
         uuid:
-          example: f1f62f20-db3c-11ea-87d0-0242ac130003
           type: string
       type: object
     tenants:
