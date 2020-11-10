@@ -11,7 +11,7 @@ externalDocs:
   url: https://github.com/codelyrics/bitqueue-api/wiki/About-Bitqueue-(v0.1)
 servers:
 - description: BitQueue API endpoints
-  url: http://0.0.0.0:8080/bitqueue/api
+  url: http://0.0.0.0:80/bitqueue/api
 paths:
   /org:
     get:
