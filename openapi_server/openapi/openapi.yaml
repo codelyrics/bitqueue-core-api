@@ -12,6 +12,8 @@ externalDocs:
 servers:
 - description: BitQueue API endpoints
   url: http://0.0.0.0:80/bitqueue/api
+- description: BitQueue API endpoints
+  url: http://localhost:80/bitqueue/api
 paths:
   /org:
     get:
